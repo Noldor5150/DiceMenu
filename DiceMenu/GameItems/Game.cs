@@ -9,7 +9,6 @@ namespace DiceMenu.GameItems
      class Game
     {
         public List<Player> Players { get; private set; }
-       
         private List<string> PreviousGameHistory { get; set; }
        
         public Game()
@@ -42,6 +41,7 @@ namespace DiceMenu.GameItems
                 {
                     if (player.IsPlayerInGame)
                     {
+                        player.Score = 0;
                         player.ThrowDices();
                         action = $"Player: {player.Name} score: {player.Score}";
                         PreviousGameHistory.Add(action);
@@ -50,17 +50,20 @@ namespace DiceMenu.GameItems
                     }
                 }
                 int maxScore = Players.Max(player => player.Score);
-                Player winner = Players.Where(player => player.Score == maxScore).SingleOrDefault();
-                if (winner != null)
+                Player[] winner = Players.Where(player => player.Score == maxScore).ToArray();
+                if (winner.Length == 1)
                 {
                     IsThereWinner = true;
-                    PreviousGameHistory.Add($"Player {winner.Name} wins");
-                    Console.WriteLine($"Player {winner.Name} wins");
+                    action = $"Player {winner[0].Name} wins";
+                    PreviousGameHistory.Add(action);
+                    Console.WriteLine(action);
                     Players.ForEach(player => player.IsPlayerInGame = false);
-                    
                 }
                 else
                 {
+                    action = "DRAW!!! Start EXTRA ROUND";
+                    PreviousGameHistory.Add(action);
+                    Console.WriteLine(action);
                     Players.Where(player => player.Score != maxScore).ToList().ForEach(player => player.IsPlayerInGame = false);
                 }
             } while (!IsThereWinner);
@@ -69,13 +72,11 @@ namespace DiceMenu.GameItems
 
         public void ShowReplay()
         {
-
             foreach (string item in PreviousGameHistory )
             {
                 Console.WriteLine(item);
                 Console.ReadKey();
             }
-            
         }
     }
 }
