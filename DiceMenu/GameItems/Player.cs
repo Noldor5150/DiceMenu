@@ -10,12 +10,14 @@ namespace DiceMenu.GameItems
         public string Name { get; set; }
         public int Score { get; set; }
         public List<Dice> Dices { get; set; }
+        public bool IsPlayerInGame { get; set; }
 
         public Player(int id, string name, List<Dice> dices)
         {
             Id = id;
             Name = name;
             Dices = dices;
+            IsPlayerInGame = true;
         }
 
         public void ThrowDices()
