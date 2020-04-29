@@ -22,6 +22,7 @@ namespace DiceMenu.GameItems
 
         public void ThrowDices()
         {
+
             foreach (Dice dice in Dices)
             {
                 Random random = new Random();

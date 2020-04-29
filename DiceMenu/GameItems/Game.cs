@@ -27,7 +27,6 @@ namespace DiceMenu.GameItems
             {
                 Players.Add(new Player(y, $"P{y}", dices));
             }
-
         }
 
         public void RunGame()
@@ -45,7 +44,7 @@ namespace DiceMenu.GameItems
                         player.ThrowDices();
                         action = $"Player: {player.Name} score: {player.Score}";
                         PreviousGameHistory.Add(action);
-                        Console.WriteLine($"Player: {player.Name} score: {player.Score}");
+                        Console.WriteLine(action);
                         Console.ReadKey();
                     }
                 }
@@ -67,11 +66,11 @@ namespace DiceMenu.GameItems
                     Players.Where(player => player.Score != maxScore).ToList().ForEach(player => player.IsPlayerInGame = false);
                 }
             } while (!IsThereWinner);
-
         }
 
         public void ShowReplay()
         {
+            Console.WriteLine("Replay Starts: ");
             foreach (string item in PreviousGameHistory )
             {
                 Console.WriteLine(item);
